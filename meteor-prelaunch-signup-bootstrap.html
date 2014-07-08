@@ -1,0 +1,140 @@
+<template name="layout">
+  <layout role="layout">
+    <head>
+      <title>My Awesome App's Prelaunch Signup</title>
+    </head>
+    <body>
+      <div class="container-narrow">
+        <header>
+          {{>yield region='header'}}
+        </header>
+        <div class="main">
+          {{>yield}}
+        </div>
+        <footer>
+          {{>yield region='footer'}}
+        </footer>
+      </div>
+    </body>
+  </layout>
+</template>
+
+<template name="header">
+  <nav class="pull-right">
+    <ul class="nav nav-pills">
+      <li class="{{isActiveNow 'main'}}"><a href="{{pathFor 'main'}}">Home</a></li>
+      <li class="{{isActiveNow 'about'}}"><a href="{{pathFor 'about'}}">About</a></li>
+      <li class="{{isActiveNow 'contact'}}"><a href="{{pathFor 'contact'}}">Contact</a></li>
+    </ul>
+  </nav>
+  <h3 class="muted">My Awesome App's Prelaunch Signup</h3>
+  <hr>
+</template>
+
+<template name="main">
+  {{#if showAdmin}}
+    {{>admin}}
+  {{else}}
+    {{>signup}}
+  {{/if}}
+</template>
+
+<template name="about">
+ No content yet on this about page.
+</template>
+
+<template name="contact">
+ No content yet on this contact page.
+</template>
+
+<template name="footer">
+  <hr>
+  <p class="pull-right">
+    {{#if isAdmin}}
+      <a href="#" class="admin">Toggle Admin</a>&middot;
+    {{/if}}
+    {{>loginButtons}}
+  </p>
+  <p>&copy; Company 2014 &middot;
+    <a href="#">Privacy</a> &middot;
+    <a href="#">Terms of Service</a>
+  </p>
+</template>
+
+<template name="signup">
+  <div class="jumbotron">
+    {{#if emailSubmitted}}
+      <h1>Thanks for signing up!</h1>
+    {{else}}
+      <h1>Super awesome marketing speak!</h1>
+      <p class="lead">
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+        consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+        cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+        proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+      </p>
+      <form class="form-inline">
+        {{#if showBadEmail}}
+          {{>badEmail}}
+        {{/if}}
+        <div class="form-group col-md-9">
+          <div class="input-group">
+            <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+            <input class="form-control" id="email" type="email">
+          </div>
+        </div>
+        <div class="form-group">
+          <button class="btn btn-primary">Ask for an invite!</button>
+        </div>
+      </form>
+    {{/if}}
+  </div>
+  <hr>
+  <div class="row marketing">
+    <div class="col-md-6">
+      <h4>Subheading</h4>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod.</p>
+      <h4>Subheading</h4>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod.</p>
+      <h4>Subheading</h4>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod.</p>
+    </div>
+    <div class="col-md-6">
+      <h4>Subheading</h4>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod.</p>
+      <h4>Subheading</h4>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod.</p>
+      <h4>Subheading</h4>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod.</p>
+    </div>
+  </div>
+</template>
+
+<template name="badEmail">
+  <div class="bg-warning">
+    <p>That's not a real email address...</p>
+  </div>
+</template>
+
+<template name="admin">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Email</th>
+        <th>Referrer</th>
+        <th>Time</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each emails}}
+        <tr>
+          <td>{{this.email}}</td>
+          <td>{{this.referrer}}</td>
+          <td>{{prettifyDate this.timestamp}}</td>
+        </tr>
+      {{/each}}
+    </tbody>
+  </table>
+</template>
