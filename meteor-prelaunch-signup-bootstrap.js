@@ -21,9 +21,24 @@ if(Handlebars){
     currentRoute = Router.current().route.name.toLowerCase();
     var reg = new RegExp(routes, 'i');
 
-    if(className.hash)className = 'active';
+    if (className.hash)className = 'active';
 
     return reg.test(currentRoute) ? className : '';
+  });
+
+    Handlebars.registerHelper("prettifyDate", function (timestamp) {
+    var monthNames = [
+      "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+      "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+    ];
+
+    var result = [
+      timestamp.getDate(),
+      monthNames[timestamp.getMonth()],
+      timestamp.getFullYear()
+    ];
+
+    return result.join(" ");
   });
 }
 
@@ -44,32 +59,13 @@ if (Meteor.isClient) {
         path: '/',
         template: 'main'
     });
+    this.route('about');
+    this.route('contact');
   });
 
-  Router.map( function () {
-    this.route('about', {
-        path: '/about',
-        template: 'about'
-    });
-  });
-
-  Router.map( function () {
-    this.route('contact', {
-        path: '/contact',
-        template: 'contact'
-    });
-  });
-
-  Template.footer.events({
-    'click .login': function (e, t){
-      Meteor.loginWithGithub();
-      return false;
-    },
-
-    'click .admin': function (e, t){
-      Session.set("showAdmin", !Session.get("showAdmin"));
-    }
-   });
+  Template.main.showAdmin = function () {
+    return Session.get("showAdmin");
+  };
 
   Template.signup.events({
     'submit form': function (e, t) {
@@ -96,34 +92,24 @@ if (Meteor.isClient) {
     return Session.get("emailSubmitted");
   };
 
+  Template.footer.events({
+    'click .login': function (e, t){
+      Meteor.loginWithGithub();
+      return false;
+    },
+
+    'click .admin': function (e, t){
+      Session.set("showAdmin", !Session.get("showAdmin"));
+    }
+   });
+
   Template.footer.isAdmin = function () {
     return isAdmin(Meteor.userId());
-  };
-
-  Template.main.showAdmin = function () {
-    return Session.get("showAdmin");
   };
 
   Template.admin.emails = function () {
     return Emails.find().fetch();
   };
-
-  // As suggested here: http://stackoverflow.com/q/17874181/374865,
-  // with custom Date formatting.
-  Handlebars.registerHelper("prettifyDate", function (timestamp) {
-    var monthNames = [
-      "Jan", "Feb", "Mar", "Apr", "May", "Jun",
-      "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
-    ];
-
-    var result = [
-      timestamp.getDate(),
-      monthNames[timestamp.getMonth()],
-      timestamp.getFullYear()
-    ];
-
-    return result.join(" ");
-  });
 }
 
 if (Meteor.isServer) {

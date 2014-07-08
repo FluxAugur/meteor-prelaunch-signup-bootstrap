@@ -6,13 +6,10 @@
     <body>
       <div class="container-narrow">
         <header>
-          {{>yield region='header'}}
         </header>
         <div class="main">
-          {{>yield}}
         </div>
         <footer>
-          {{>yield region='footer'}}
         </footer>
       </div>
     </body>
@@ -22,9 +19,9 @@
 <template name="header">
   <nav class="pull-right">
     <ul class="nav nav-pills">
-      <li class="{{isActiveNow 'main'}}"><a href="{{pathFor 'main'}}">Home</a></li>
-      <li class="{{isActiveNow 'about'}}"><a href="{{pathFor 'about'}}">About</a></li>
-      <li class="{{isActiveNow 'contact'}}"><a href="{{pathFor 'contact'}}">Contact</a></li>
+      <li class=""><a href="">Home</a></li>
+      <li class=""><a href="">About</a></li>
+      <li class=""><a href="">Contact</a></li>
     </ul>
   </nav>
   <h3 class="muted">My Awesome App's Prelaunch Signup</h3>
@@ -32,11 +29,6 @@
 </template>
 
 <template name="main">
-  {{#if showAdmin}}
-    {{>admin}}
-  {{else}}
-    {{>signup}}
-  {{/if}}
 </template>
 
 <template name="about">
@@ -49,9 +41,6 @@
 
 <template name="signup">
   <div class="jumbotron">
-    {{#if emailSubmitted}}
-      <h1>Thanks for signing up!</h1>
-    {{else}}
       <h1>Super awesome marketing speak!</h1>
       <p class="lead">
         Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
@@ -62,9 +51,6 @@
         proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
       </p>
       <form class="form-inline">
-        {{#if showBadEmail}}
-          {{>badEmail}}
-        {{/if}}
         <div class="form-group col-md-9">
           <div class="input-group">
             <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
@@ -101,10 +87,6 @@
 <template name="footer">
   <hr>
   <p class="pull-right">
-    {{#if isAdmin}}
-      <a href="#" class="admin">Toggle Admin</a>&middot;
-    {{/if}}
-    {{>loginButtons}}
   </p>
   <p>&copy; Company 2014 &middot;
     <a href="#">Privacy</a> &middot;
@@ -128,13 +110,11 @@
       </tr>
     </thead>
     <tbody>
-      {{#each emails}}
         <tr>
-          <td>{{this.email}}</td>
-          <td>{{this.referrer}}</td>
-          <td>{{prettifyDate this.timestamp}}</td>
+          <td></td>
+          <td></td>
+          <td></td>
         </tr>
-      {{/each}}
     </tbody>
   </table>
 </template>
